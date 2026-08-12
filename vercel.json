@@ -1,9 +1,13 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "functions": {
-    "api/proxy.mjs": { "maxDuration": 300 }
+    "api/proxy.mjs": { "maxDuration": 300 },
+    "api/runtime-analyze.mjs": { "maxDuration": 300 },
+    "api/runtime-health.mjs": { "maxDuration": 30 }
   },
   "rewrites": [
+    { "source": "/api/health", "destination": "/api/runtime-health" },
+    { "source": "/api/analyze", "destination": "/api/runtime-analyze" },
     { "source": "/api/:path*", "destination": "/api/proxy?__path=:path*" },
     { "source": "/", "destination": "/public/index.html" },
     { "source": "/app.js", "destination": "/public/app.js" },
